@@ -4,27 +4,18 @@ import React from 'react'
 import config from '@/payload.config'
 import './styles.css'
 
-interface News {
-  id: string | number
-  title: string
-  abstract: string
-  description: string
-  author: string
-  date: string
-}
-
 export default async function HomePage() {
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
 
-  let news: News[] = []
+  let news: any[] = []
   try {
     const newsResult = await payload.find({
       collection: 'news',
       limit: 100,
       sort: '-date',
     })
-    news = newsResult.docs as News[]
+    news = newsResult.docs || []
   } catch (err) {
     console.log('News fetch error:', err)
   }
