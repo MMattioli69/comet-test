@@ -8,6 +8,14 @@ export const Users: CollectionConfig = {
   auth: true,
   fields: [
     // Email added by default
-    // Add more fields as needed
+    {
+      name: 'groups',
+      type: 'relationship',
+      relationTo: 'groups',
+      hasMany: true,
+      admin: {
+        description: 'Groups this user belongs to',
+      },
+    },
   ],
 }
