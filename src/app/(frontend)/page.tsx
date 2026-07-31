@@ -5,7 +5,7 @@ import config from '@/payload.config'
 import './styles.css'
 
 interface News {
-  id: string
+  id: string | number
   title: string
   abstract: string
   description: string
