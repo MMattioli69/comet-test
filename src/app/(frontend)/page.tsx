@@ -1,59 +1,99 @@
-import { headers as getHeaders } from 'next/headers.js'
-import Image from 'next/image'
 import { getPayload } from 'payload'
 import React from 'react'
-import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
 import './styles.css'
 
+interface News {
+  id: string
+  title: string
+  abstract: string
+  description: string
+  author: string
+  date: string
+}
+
 export default async function HomePage() {
-  const headers = await getHeaders()
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
-  const { user } = await payload.auth({ headers })
 
-  const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
+  let news: News[] = []
+  try {
+    const newsResult = await payload.find({
+      collection: 'news',
+      limit: 100,
+      sort: '-date',
+    })
+    news = newsResult.docs as News[]
+  } catch (err) {
+    console.log('News fetch error:', err)
+  }
 
   return (
-    <div className="home">
-      <div className="content">
-        <picture>
-          <source srcSet="https://raw.githubusercontent.com/payloadcms/payload/3.x/packages/ui/src/assets/payload-favicon.svg" />
-          <Image
-            alt="Payload Logo"
-            height={65}
-            src="https://raw.githubusercontent.com/payloadcms/payload/3.x/packages/ui/src/assets/payload-favicon.svg"
-            width={65}
-          />
-        </picture>
-        {!user && <h1>Welcome to your new project.</h1>}
-        {user && <h1>Welcome back, {user.email}</h1>}
-        <div className="links">
-          <a
-            className="admin"
-            href={payloadConfig.routes.admin}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Go to admin panel
-          </a>
-          <a
-            className="docs"
-            href="https://payloadcms.com/docs"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Documentation
-          </a>
+    <div className="frontend-home">
+      <header className="header">
+        <div className="header-content">
+          <div className="logo">
+            <span className="logo-text">comet</span>
+          </div>
+          <div className="header-right">
+            <span className="user-greeting">Benvenuto</span>
+            <button className="settings-btn">⚙️</button>
+          </div>
         </div>
-      </div>
-      <div className="footer">
-        <p>Update this page by editing</p>
-        <a className="codeLink" href={fileURL}>
-          <code>app/(frontend)/page.tsx</code>
-        </a>
-      </div>
+        <nav className="nav">
+          <a href="/" className="nav-link active">Home</a>
+        </nav>
+      </header>
+
+      <main className="main-content">
+        <div className="container">
+          <h1>Ciao</h1>
+          <p className="subtitle">Scegli una sezione per iniziare.</p>
+
+          <div className="cards-grid">
+            <div className="card">
+              <div className="card-icon">📊</div>
+              <h3>Report Direzionali</h3>
+              <p>Inserimento e visualizzazione dei dati progressivi.</p>
+              <a href="#" className="card-link">Aprile →</a>
+            </div>
+
+            <div className="card">
+              <div className="card-icon">📋</div>
+              <h3>Contratti e premi</h3>
+              <p>Consulta contratti e premi del gruppo.</p>
+              <a href="#" className="card-link">Aprile →</a>
+            </div>
+
+            <div className="card news-card">
+              <div className="card-header">
+                <div className="card-icon">📰</div>
+                <h3>Notizie Commerciali</h3>
+              </div>
+
+              <div className="news-list">
+                {news.length > 0 ? (
+                  news.map((item) => (
+                    <div key={item.id} className="news-item">
+                      <div className="news-date">
+                        {new Date(item.date).toLocaleDateString('it-IT', {
+                          day: '2-digit',
+                          month: 'long',
+                          year: 'numeric',
+                        }).toUpperCase()}
+                      </div>
+                      <div className="news-title">{item.title}</div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="no-news">Nessuna notizia al momento</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   )
 }
