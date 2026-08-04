@@ -1,4 +1,5 @@
 import { getPayload } from 'payload'
+import Image from 'next/image'
 import React from 'react'
 
 import config from '@/payload.config'
@@ -25,7 +26,13 @@ export default async function HomePage() {
       <header className="header">
         <div className="header-content">
           <div className="logo">
-            <span className="logo-text">comet</span>
+            <img
+              src="https://comet-websolute-dev-websolute-devs-projects.vercel.app/logo-comet.svg"
+              alt="Comet Logo"
+              width={120}
+              height={40}
+              style={{ height: 'auto' }}
+            />
           </div>
           <div className="header-right">
             <span className="user-greeting">Benvenuto</span>
