@@ -41,6 +41,8 @@ export default async function HomePage() {
         </div>
         <nav className="nav">
           <a href="/" className="nav-link active">Home</a>
+          <a href="/report-direzionali" className="nav-link">Report Direzionali</a>
+          <a href="/contratti-e-premi" className="nav-link">Contratti e premi</a>
         </nav>
       </header>
 
@@ -54,14 +56,14 @@ export default async function HomePage() {
               <div className="card-icon">📊</div>
               <h3>Report Direzionali</h3>
               <p>Inserimento e visualizzazione dei dati progressivi.</p>
-              <a href="#" className="card-link">Aprile →</a>
+              <a href="/report-direzionali" className="card-link">Visualizza →</a>
             </div>
 
             <div className="card">
               <div className="card-icon">📋</div>
               <h3>Contratti e premi</h3>
               <p>Consulta contratti e premi del gruppo.</p>
-              <a href="#" className="card-link">Aprile →</a>
+              <a href="/contratti-e-premi" className="card-link">Visualizza →</a>
             </div>
 
             <div className="card news-card">
