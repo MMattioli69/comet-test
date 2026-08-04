@@ -27,11 +27,11 @@ export default async function HomePage() {
         <div className="header-content">
           <div className="logo">
             <img
-              src="https://comet-websolute-dev-websolute-devs-projects.vercel.app/logo-comet.svg"
+              src="/logo-comet.svg"
               alt="Comet Logo"
               width={120}
-              height={40}
-              style={{ height: 'auto' }}
+              height={50}
+              style={{ height: 'auto', maxWidth: '120px' }}
             />
           </div>
           <div className="header-right">
