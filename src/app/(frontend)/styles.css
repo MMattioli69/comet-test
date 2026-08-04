@@ -80,13 +80,14 @@ a {
   display: flex;
   align-items: center;
   height: 50px;
+  min-width: 100px;
 }
 
 .logo img {
-  height: auto;
-  max-height: 50px;
-  max-width: 140px;
+  height: 40px;
   width: auto;
+  max-width: 120px;
+  object-fit: contain;
 }
 
 .header-right {
